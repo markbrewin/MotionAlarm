@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Motion Alarm</string>
+
+    <!-- Titles -->
+    <string name="alarms_upcoming">Upcoming Alarms</string>
+
+    <!-- Menu Items -->
+    <string name="menu_alarm_add">Add Alarm</string>
+
+    <!-- List Text -->
+    <string name="no_alarms">No alarms currently exist.</string>
+
+    <!-- Buttons -->
+    <string name="initial_monday">M</string>
+    <string name="initial_tuesday">T</string>
+    <string name="initial_wednesday">W</string>
+    <string name="initial_thursday">T</string>
+    <string name="initial_friday">F</string>
+    <string name="initial_saturday">S</string>
+    <string name="initial_sunday">S</string>
+    <string name="alarm_set">Create Alarm</string>
+</resources>
