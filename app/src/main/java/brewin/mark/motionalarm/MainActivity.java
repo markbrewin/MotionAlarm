@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ListView;
@@ -14,9 +15,11 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
+
     private ArrayList<String> alarms = new ArrayList<>();
 
-    private AlarmAdapter alarmAdapter;
     AlarmManager alarmManager;
 
     @Override
@@ -24,29 +27,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Creates the toolbar at the top of the application.
+        Toolbar toolbarMain = findViewById(R.id.toolbarMain);
+        setSupportActionBar(toolbarMain);
+
+        //Fetches the alarm manager service.
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         alarms.add("Hello");
         alarms.add("Test");
         alarms.add("Frank.");
 
-        Toolbar toolbarMain = findViewById(R.id.toolbarMain);
-        setSupportActionBar(toolbarMain);
-
-        FloatingActionButton fab = findViewById(R.id.fabAddAlarm);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                addAlarm();
-            }
-        });
-
+        //Checks if any alarms exist and whether to display this.
         if(!alarms.isEmpty()) {
+            Log.d(TAG, "Alarms exist and will be displayed.");
             findViewById(R.id.txtNoAlarms).setVisibility(View.GONE);
 
+            //Lists each alarm using the custom layout.
             ListView alarmList = findViewById(R.id.listAlarms);
-            alarmAdapter = new AlarmAdapter(this, R.layout.list_alarm, alarms);
+            AlarmAdapter alarmAdapter = new AlarmAdapter(this, R.layout.list_alarm, alarms);
             alarmList.setAdapter(alarmAdapter);
+        } else {
+            Log.d(TAG, "No alarms exist to be displayed.");
         }
     }
 
@@ -72,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void addAlarm() {
-        Toast.makeText(getApplicationContext(), "Create Alarm", Toast.LENGTH_SHORT).show();
+    public void addAlarm(View view) {
+        Log.d(TAG, "CreateAlarm activity started.");
 
         Intent intent = new Intent(getApplicationContext(), CreateAlarmActivity.class);
         startActivity(intent);
