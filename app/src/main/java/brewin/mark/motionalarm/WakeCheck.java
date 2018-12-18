@@ -24,7 +24,6 @@ import com.google.android.gms.tasks.Task;
 import java.util.Date;
 
 public class WakeCheck {
-
     private static final String TAG = "WakeCheck";
 
     private Context context;

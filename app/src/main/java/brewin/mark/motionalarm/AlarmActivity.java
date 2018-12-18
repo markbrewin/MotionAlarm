@@ -4,18 +4,21 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
 
 //Activity used to display that the alarm has been triggered.
 public class AlarmActivity extends AppCompatActivity {
-
     private static final String TAG = "AlarmActivity";
+
+    public double backupMins = 1;
 
     //Media player required to play the alarm sound.
     private MediaPlayer alarmMedPlyr;
@@ -42,7 +45,7 @@ public class AlarmActivity extends AppCompatActivity {
         alarmMedPlyr.stop();
         alarmMedPlyr.release();
 
-
+        startBackupCountdown();
     }
 
     //Plays the alarm ringtone.
@@ -76,5 +79,24 @@ public class AlarmActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Error playing alarm ringtone.", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void startBackupCountdown() {
+        double countdownTime = (backupMins * 60) * 1000;
+
+        new CountDownTimer((long) countdownTime, 1000) {
+            TextView backupCountdown = findViewById(R.id.txtBackupCountdown);
+
+            public void onTick(long millisUntilFinished) {
+                String mins = String.format("%02d", (millisUntilFinished / 1000) / 60);
+                String secs = String.format("%02d", (millisUntilFinished / 1000) % 60);
+
+                backupCountdown.setText(getString(R.string.alarm_backup_countdown, mins, secs));
+            }
+
+            public void onFinish() {
+                backupCountdown.setText(getString(R.string.alarm_backup_countdown, "00", "00"));
+            }
+        }.start();
     }
 }

@@ -18,7 +18,6 @@ import android.support.v7.widget.Toolbar;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
     private static final String TAG = "MainActivity";
 
     private ArrayList<String> alarms = new ArrayList<>();

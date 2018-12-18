@@ -20,5 +20,8 @@
     <string name="initial_sunday">S</string>
 
     <string name="alarm_set">Create Alarm</string>
-    <string name="alarm_stop">Stop Alarm</string>
+    <string name="alarm_stop">Stop</string>
+
+    <!-- Alarms -->
+    <string name="alarm_backup_countdown">%1$s:%2$s</string>
 </resources>
