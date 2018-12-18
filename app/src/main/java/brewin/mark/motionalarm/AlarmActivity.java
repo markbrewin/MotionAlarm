@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -21,12 +20,16 @@ public class AlarmActivity extends AppCompatActivity {
     //Media player required to play the alarm sound.
     private MediaPlayer alarmMedPlyr;
 
+    private WakeCheck wakeCheck;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
         Log.d(TAG, "Alarm activity triggered.");
+
+        wakeCheck = new WakeCheck(this);
 
         alarmSound();
     }

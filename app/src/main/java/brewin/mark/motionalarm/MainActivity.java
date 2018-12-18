@@ -1,8 +1,11 @@
 package brewin.mark.motionalarm;
 
+import android.Manifest;
 import android.app.AlarmManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         //Creates the toolbar at the top of the application.
         Toolbar toolbarMain = findViewById(R.id.toolbarMain);
         setSupportActionBar(toolbarMain);
+
+        checkPermissions();
 
         //Fetches the alarm manager service.
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
@@ -79,5 +84,26 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), CreateAlarmActivity.class);
         startActivity(intent);
+    }
+
+    private void checkPermissions() {
+        ActivityCompat.requestPermissions(this,
+                new String[]{
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                },1);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case 1: {
+                if(grantResults.length > 0 &&
+                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.d(TAG, "Permissions granted.");
+                } else {
+                    Log.d(TAG, "Permissions denied.");
+                }
+            }
+        }
     }
 }
