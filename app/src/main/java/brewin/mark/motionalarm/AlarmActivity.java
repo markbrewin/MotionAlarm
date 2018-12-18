@@ -34,6 +34,9 @@ public class AlarmActivity extends AppCompatActivity {
 
         wakeCheck = new WakeCheck(this);
 
+        TextView alarmTime = findViewById(R.id.txtAlarmTime);
+        alarmTime.setText(getString(R.string.alarm_time, wakeCheck.getTimeOriginal('h'), wakeCheck.getTimeOriginal('m')));
+
         alarmSound();
     }
 
@@ -82,6 +85,8 @@ public class AlarmActivity extends AppCompatActivity {
     }
 
     private void startBackupCountdown() {
+        Log.d(TAG, "Backup alarm countdown started.");
+
         double countdownTime = (backupMins * 60) * 1000;
 
         new CountDownTimer((long) countdownTime, 1000) {
@@ -91,11 +96,15 @@ public class AlarmActivity extends AppCompatActivity {
                 String mins = String.format("%02d", (millisUntilFinished / 1000) / 60);
                 String secs = String.format("%02d", (millisUntilFinished / 1000) % 60);
 
-                backupCountdown.setText(getString(R.string.alarm_backup_countdown, mins, secs));
+                backupCountdown.setText(getString(R.string.alarm_time, mins, secs));
             }
 
             public void onFinish() {
-                backupCountdown.setText(getString(R.string.alarm_backup_countdown, "00", "00"));
+                Log.d(TAG, "Backup alarm triggered.");
+
+                backupCountdown.setText(getString(R.string.alarm_time, "00", "00"));
+
+                wakeCheck.checkMovement();
             }
         }.start();
     }

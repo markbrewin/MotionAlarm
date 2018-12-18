@@ -21,6 +21,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class WakeCheck {
@@ -30,7 +31,7 @@ public class WakeCheck {
 
     private FusedLocationProviderClient mFusedLocationClient;
 
-    private Date timeOriginal;
+    private Calendar alarmTimeOriginal;
     private int triggerIteration;
 
     private LocationRequest mLocationRequest;
@@ -42,12 +43,33 @@ public class WakeCheck {
     public WakeCheck(Context context) {
         Log.d(TAG, "New WakeCheck created");
 
-        timeOriginal = new Date();
+        alarmTimeOriginal = Calendar.getInstance();
         triggerIteration = 0;
 
         this.context = context;
 
         getLocation();
+    }
+
+    public String getTimeOriginal(char cat) {
+        String val = "";
+
+        switch (cat) {
+            case 'h':
+                val = String.format("%02d", alarmTimeOriginal.get(Calendar.HOUR_OF_DAY));
+                break;
+            case 'm':
+                val = String.format("%02d", alarmTimeOriginal.get(Calendar.MINUTE));
+                break;
+        }
+
+        return val;
+    }
+
+    public void checkMovement() {
+        triggerIteration++;
+
+
     }
 
     private void getLocation() {

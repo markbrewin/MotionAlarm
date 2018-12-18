@@ -23,5 +23,5 @@
     <string name="alarm_stop">Stop</string>
 
     <!-- Alarms -->
-    <string name="alarm_backup_countdown">%1$s:%2$s</string>
+    <string name="alarm_time">%1$s:%2$s</string>
 </resources>
