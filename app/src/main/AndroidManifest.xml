@@ -20,9 +20,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AlarmActivity" />
+        <activity
+            android:name=".AlarmActivity"
+            android:showOnLockScreen="true"
+            android:turnScreenOn="true"
+            android:showWhenLocked="true">
+        </activity>
         <activity android:name=".CreateAlarmActivity"></activity>
 
-        <receiver android:name="brewin.mark.motionalarm.AlarmReceiver"></receiver>
+        <receiver android:name=".AlarmReceiver"></receiver>
     </application>
 </manifest>
