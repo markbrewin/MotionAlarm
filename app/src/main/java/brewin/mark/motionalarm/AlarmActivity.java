@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,10 +19,14 @@ import java.io.IOException;
 public class AlarmActivity extends AppCompatActivity {
     private static final String TAG = "AlarmActivity";
 
-    public double backupMins = 1;
+    public int backupMins = 1;
+    public int wakeDistance = 5;
 
     //Media player required to play the alarm sound.
     private MediaPlayer alarmMedPlyr;
+
+    private Button alarmStop;
+    private TextView triggerIteration;
 
     private WakeCheck wakeCheck;
 
@@ -32,27 +37,46 @@ public class AlarmActivity extends AppCompatActivity {
 
         Log.d(TAG, "Alarm activity triggered.");
 
-        wakeCheck = new WakeCheck(this);
+        alarmStop = findViewById(R.id.btnEndAlarm);
+        
+        wakeCheck = new WakeCheck(this, wakeDistance);
 
         TextView alarmTime = findViewById(R.id.txtAlarmTime);
         alarmTime.setText(getString(R.string.alarm_time, wakeCheck.getTimeOriginal('h'), wakeCheck.getTimeOriginal('m')));
+        triggerIteration = findViewById(R.id.txtTriggerIteration);
+        //triggerIteration.setText(wakeCheck.getTriggerIteration());
 
-        alarmSound();
+        alarmInitialiseSound();
+    }
+
+    private void alarmStart() {
+        Log.d(TAG, "Alarm started.");
+
+        alarmMedPlyr.start();
     }
 
     //Ends the alarm activity and schedules the backup alarm.
     public void alarmStop(View view) {
         Log.d(TAG, "Alarm turned off.");
 
-        //Stop the alarm sound and release the resources being used.
+        //Stop the alarm sound and disable .
         alarmMedPlyr.stop();
-        alarmMedPlyr.release();
+        alarmStop.setEnabled(false);
 
         startBackupCountdown();
     }
 
+    private void alarmEnd() {
+        Log.d(TAG, "Alarm destroyed.");
+
+        alarmMedPlyr.stop();
+        alarmMedPlyr.release();
+
+        finish();
+    }
+
     //Plays the alarm ringtone.
-    private void alarmSound() {
+    private void alarmInitialiseSound() {
         //Fetches the default alarm ringtone and create the media player for it.
         Uri alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 
@@ -104,7 +128,11 @@ public class AlarmActivity extends AppCompatActivity {
 
                 backupCountdown.setText(getString(R.string.alarm_time, "00", "00"));
 
-                wakeCheck.checkMovement();
+                if(!wakeCheck.checkMovement()){
+                    alarmStart();
+                } else {
+                    alarmEnd();
+                }
             }
         }.start();
     }
