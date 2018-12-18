@@ -18,5 +18,7 @@
     <string name="initial_friday">F</string>
     <string name="initial_saturday">S</string>
     <string name="initial_sunday">S</string>
+
     <string name="alarm_set">Create Alarm</string>
+    <string name="alarm_stop">Stop Alarm</string>
 </resources>

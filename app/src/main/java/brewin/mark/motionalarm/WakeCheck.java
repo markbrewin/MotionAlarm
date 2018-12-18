@@ -32,7 +32,7 @@ public class WakeCheck {
     private FusedLocationProviderClient mFusedLocationClient;
 
     private Date timeOriginal;
-    private int triggerIteration = 0;
+    private int triggerIteration;
 
     private LocationRequest mLocationRequest;
     private LocationCallback mLocationCallback;
@@ -44,6 +44,7 @@ public class WakeCheck {
         Log.d(TAG, "New WakeCheck created");
 
         timeOriginal = new Date();
+        triggerIteration = 0;
 
         this.context = context;
 

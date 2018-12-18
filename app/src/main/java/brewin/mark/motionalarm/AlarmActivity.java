@@ -34,15 +34,15 @@ public class AlarmActivity extends AppCompatActivity {
         alarmSound();
     }
 
-    //Ends the alarm activity and returns user to main activity.
-    public void alarmEnd(View view) {
+    //Ends the alarm activity and schedules the backup alarm.
+    public void alarmStop(View view) {
         Log.d(TAG, "Alarm turned off.");
 
         //Stop the alarm sound and release the resources being used.
         alarmMedPlyr.stop();
         alarmMedPlyr.release();
 
-        finish();
+
     }
 
     //Plays the alarm ringtone.
