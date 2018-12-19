@@ -80,9 +80,6 @@ public class AlarmActivity extends AppCompatActivity {
         countdownClock = findViewById(R.id.txtCountdownClock);
         triggerIteration = findViewById(R.id.txtTriggerIteration);
 
-        //alarmTime.setText(getString(R.string.alarm_time, wakeCheck.getTimeOriginal('h'), wakeCheck.getTimeOriginal('m')));
-        //triggerIteration.setText(wakeCheck.getTriggerIteration());
-
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
@@ -107,12 +104,18 @@ public class AlarmActivity extends AppCompatActivity {
         }
 
         wakeCheck = new WakeCheck();
+
+        alarmTime.setText(getString(R.string.alarm_time, wakeCheck.getTimeOriginal('h'), wakeCheck.getTimeOriginal('m')));
+        triggerIteration.setText(getString(R.string.alarm_iteration, wakeCheck.getTriggerIteration()));
+
         alarmInitialiseSound();
         alarmStart();
     }
 
     private void alarmStart() {
         Log.d(TAG, "Alarm started.");
+
+        triggerIteration.setText(getString(R.string.alarm_iteration, wakeCheck.getTriggerIteration()));
 
         if(countdown != null) {
             countdown.cancel();
