@@ -1,8 +1,11 @@
 package brewin.mark.motionalarm;
 
 import android.Manifest;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,11 +19,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private TextView noAlarms;
     private RecyclerView alarmList;
+    private AlarmViewModel mAlarmViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,15 @@ public class MainActivity extends AppCompatActivity {
         final AlarmAdapter adapter = new AlarmAdapter(this);
         alarmList.setAdapter(adapter);
         alarmList.setLayoutManager(new LinearLayoutManager(this));
+
+        mAlarmViewModel = ViewModelProviders.of(this).get(AlarmViewModel.class);
+
+        mAlarmViewModel.getAllAlarms().observe(this, new Observer<List<Alarm>>() {
+            @Override
+            public void onChanged(@Nullable List<Alarm> alarms) {
+                adapter.setWords(alarms);
+            }
+        });
     }
 
     public void addAlarm(View view) {

@@ -45,6 +45,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         if(mAlarms != null) {
             Alarm current = mAlarms.get(pos);
             holder.alarmName.setText(current.getName());
+            holder.alarmTime.setText(current.getHour() + ":" + current.getMin());
         } else {
             holder.noAlarms.setVisibility(View.VISIBLE);
         }
