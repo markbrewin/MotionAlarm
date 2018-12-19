@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/alarm_add"
-        android:icon="@drawable/alarm_add"
-        android:title="@string/menu_alarm_add"
+        android:id="@+id/alarm_end"
+        android:icon="@drawable/alarm_end"
+        android:title="@string/alarm_stop"
         app:showAsAction="always" />
 </menu>

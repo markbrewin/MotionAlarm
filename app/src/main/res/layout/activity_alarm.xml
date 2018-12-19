@@ -6,31 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".AlarmActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarMain"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@android:color/white"/>
+
     <TextView
         android:id="@+id/txtAlarmName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_med"
         android:textSize="@dimen/text_large"
-        app:layout_constraintBottom_toTopOf="@id/btnEndAlarm"
+        app:layout_constraintBottom_toTopOf="@id/btnStopAlarm"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Alarm Name" />
 
     <Button
-        android:id="@+id/btnEndAlarm"
+        android:id="@+id/btnStopAlarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_med"
-        android:enabled="false"
-        android:onClick="alarmStop"
+        android:onClick="alarmBtnStop"
         android:text="@string/alarm_stop"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/txtBackupCountdown"
+        android:id="@+id/txtCountdownClock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/text_alarm_time"
@@ -47,7 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/margin_sml"
         android:textSize="@dimen/text_large"
-        app:layout_constraintBottom_toTopOf="@id/txtBackupCountdown"
+        app:layout_constraintBottom_toTopOf="@id/txtCountdownClock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,6 +71,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtBackupCountdown"
+        app:layout_constraintTop_toBottomOf="@id/txtCountdownClock"
         tools:text="2" />
+
 </android.support.constraint.ConstraintLayout>

@@ -56,28 +56,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-   /*@Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.alarm_add, menu);
-        return true;
-    }*/
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.alarm_add:
-                Toast.makeText(getApplicationContext(), "Create Alarm", Toast.LENGTH_SHORT).show();
-                return true;
-
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
-        }
-    }
-
     public void addAlarm(View view) {
         Log.d(TAG, "CreateAlarm activity started.");
 
@@ -103,6 +81,28 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "Permissions denied.");
                 }
             }
+        }
+    }
+
+    /*@Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.alarm_add, menu);
+        return true;
+    }*/
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.alarm_add:
+                Toast.makeText(getApplicationContext(), "Create Alarm", Toast.LENGTH_SHORT).show();
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
         }
     }
 }

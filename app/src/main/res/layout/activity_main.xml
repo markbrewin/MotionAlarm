@@ -43,10 +43,11 @@
         android:id="@+id/txtNoAlarms"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_margin="@dimen/margin_sml"
         android:padding="8dp"
         android:text="@string/no_alarms"
         android:textAlignment="center"
         android:textSize="@dimen/text_large"
-        tools:layout_editor_absoluteY="56dp" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </android.support.constraint.ConstraintLayout>
