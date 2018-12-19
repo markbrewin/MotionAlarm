@@ -19,7 +19,7 @@ public interface AlarmDao {
     @Query("DELETE FROM tbl_alarm")
     void deleteAll();
 
-    @Query("SELECT * from tbl_alarm ORDER BY id")
+    @Query("SELECT * from tbl_alarm ORDER BY hour, min")
     LiveData<List<Alarm>> getAllAlarms();
 
     @Query("SELECT * FROM tbl_alarm WHERE hour LIKE :hour AND min LIKE :minute")
