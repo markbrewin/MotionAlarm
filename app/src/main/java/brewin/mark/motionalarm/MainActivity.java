@@ -5,6 +5,8 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -19,10 +21,12 @@ import android.view.View;
 import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
 
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
+    private static final int NEW_ALARM = 1;
 
     private TextView noAlarms;
     private RecyclerView alarmList;
@@ -51,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
         mAlarmViewModel.getAllAlarms().observe(this, new Observer<List<Alarm>>() {
             @Override
             public void onChanged(@Nullable List<Alarm> alarms) {
-                adapter.setWords(alarms);
+                Log.d(TAG, "Updating alarms list.");
+
+                adapter.setAlarms(alarms);
             }
         });
     }
@@ -60,7 +66,27 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG, "CreateAlarm activity started.");
 
         Intent intent = new Intent(getApplicationContext(), CreateAlarmActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, NEW_ALARM);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Log.d(TAG, "Activity result created, alarm creation finished.");
+
+        if(requestCode == NEW_ALARM && resultCode == RESULT_OK) {
+            Log.d(TAG, "Adding new alarm to database.");
+
+            Bundle extras = data.getExtras();
+            String name = extras.getString("name");
+            Calendar time = Calendar.getInstance();
+            time.setTimeInMillis(extras.getLong("time"));
+
+            Alarm alarm = new Alarm(name, time);
+            mAlarmViewModel.insert(alarm);
+        } else {
+            Log.d(TAG, "Alarm creation cancelled.");
+        }
     }
 
     private void checkPermissions() {

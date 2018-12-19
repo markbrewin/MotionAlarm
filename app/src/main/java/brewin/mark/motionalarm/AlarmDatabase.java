@@ -1,5 +1,6 @@
 package brewin.mark.motionalarm;
 
+import android.app.AlarmManager;
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
@@ -52,12 +53,11 @@ public abstract class AlarmDatabase extends RoomDatabase {
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
 
-            Calendar cal = Calendar.getInstance();
-            cal.set(Calendar.HOUR_OF_DAY, 8);
-            cal.set(Calendar.MINUTE, 30);
+            /*Calendar cal = Calendar.getInstance();
+            cal.add(Calendar.MINUTE, 5);
 
-            Alarm alarm = new Alarm("Good Morning!", cal);
-            mDao.insert(alarm);
+            Alarm alarm = new Alarm("Hello there!", cal);
+            mDao.insert(alarm);*/
 
             return null;
         }

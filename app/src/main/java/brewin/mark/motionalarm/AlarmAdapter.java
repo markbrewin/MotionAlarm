@@ -51,7 +51,7 @@ public class AlarmAdapter extends RecyclerView.Adapter<AlarmAdapter.AlarmViewHol
         }
     }
 
-    void setWords(List<Alarm> alarms) {
+    void setAlarms(List<Alarm> alarms) {
         mAlarms = alarms;
         notifyDataSetChanged();
     }
