@@ -6,21 +6,59 @@
     android:layout_height="match_parent"
     tools:context=".CreateAlarmActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarCreate"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@android:color/white"/>
+
     <TimePicker
         android:id="@+id/timeAlarm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:headerBackground="@color/colorPrimary"
+        android:numbersSelectorColor="@color/colorPrimaryDark" />
 
-    <Button
-        android:id="@+id/btnSetAlarm"
+    <LinearLayout
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:clickable="true"
+        android:layout_width="0px"
+        android:layout_height="0px" />
+
+    <EditText
+        android:id="@+id/editName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_sml"
+        android:ems="10"
+        android:hint="@string/alarm_name_hint"
+        android:inputType="textPersonName"
+        android:text="@string/alarm_name_default"
+        app:layout_constraintTop_toBottomOf="@id/timeAlarm"
+        tools:text="@string/alarm_name" />
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/floatingActionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:clickable="true"
         android:onClick="alarmCreate"
-        android:text="@string/alarm_set"
+        android:tint="@android:color/white"
+        app:backgroundTint="@color/colorPrimaryDark"
+        app:elevation="4dp"
+        app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeAlarm" />
+        app:rippleColor="@android:color/white"
+        app:srcCompat="@drawable/ic_add_black_24dp"
+        android:focusable="true" />
 
 </android.support.constraint.ConstraintLayout>

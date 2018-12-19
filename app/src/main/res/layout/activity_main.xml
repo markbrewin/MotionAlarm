@@ -18,6 +18,13 @@
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:titleTextColor="@android:color/white"/>
 
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/listAlarms"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"
+        tools:listitem="@layout/list_alarm"/>
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabAddAlarm"
         android:layout_width="wrap_content"
@@ -26,18 +33,12 @@
         android:onClick="addAlarm"
         android:src="@drawable/ic_alarm_add_black_24dp"
         android:tint="@android:color/white"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@android:color/white" />
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/listAlarms"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        tools:listitem="@layout/list_alarm"/>
 
 </android.support.constraint.ConstraintLayout>

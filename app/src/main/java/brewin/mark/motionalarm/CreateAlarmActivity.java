@@ -5,7 +5,11 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
@@ -32,6 +36,7 @@ public class CreateAlarmActivity extends AppCompatActivity {
 
         //Gets the time picker so the user's selected time can be used.
         timePicker = findViewById(R.id.timeAlarm);
+        timePicker.setIs24HourView(DateFormat.is24HourFormat(this));
     }
 
     public void alarmCreate(View view) {
@@ -59,5 +64,26 @@ public class CreateAlarmActivity extends AppCompatActivity {
 
         //Returns the user back to the main activity.
         finish();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_create, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.cancel:
+                finish();
+
+                return true;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
