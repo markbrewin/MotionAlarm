@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:onClick="addAlarm"
-        android:src="@drawable/alarm_add"
+        android:src="@drawable/ic_alarm_add_black_24dp"
         android:tint="@android:color/white"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -33,21 +33,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:rippleColor="@android:color/white" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/listAlarms"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"/>
-
-    <TextView
-        android:id="@+id/txtNoAlarms"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_margin="@dimen/margin_sml"
-        android:padding="8dp"
-        android:text="@string/no_alarms"
-        android:textAlignment="center"
-        android:textSize="@dimen/text_large"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:layout_marginTop="?attr/actionBarSize"
+        tools:listitem="@layout/list_alarm"/>
 
 </android.support.constraint.ConstraintLayout>

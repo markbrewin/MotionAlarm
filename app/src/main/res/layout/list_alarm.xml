@@ -4,17 +4,31 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/alarmName"
+        android:id="@+id/txtNoAlarms"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_sml"
+        android:layout_marginTop="@dimen/margin_sml"
+        android:layout_marginEnd="@dimen/margin_sml"
+        android:layout_marginBottom="@dimen/margin_sml"
+        android:padding="8dp"
+        android:text="@string/no_alarms"
+        android:textAlignment="center"
+        android:textSize="@dimen/text_large"
+        android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/txtAlarmName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/alarmTime"
-        android:layout_toEndOf="@+id/alarmTime"
+        android:layout_alignBaseline="@+id/txtAlarmTime"
+        android:layout_toEndOf="@+id/txtAlarmTime"
         android:padding="8dp"
         android:textSize="@dimen/text_medium"
         tools:text="Alarm Name" />
 
     <TextView
-        android:id="@+id/alarmTime"
+        android:id="@+id/txtAlarmTime"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -23,70 +37,5 @@
         android:textAlignment="center"
         android:textSize="@dimen/text_large"
         tools:text="20:54" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:padding="8dp"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/dayToggle-Mon"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_day"
-            android:layout_weight="1"
-            android:text="@string/initial_monday" />
-
-        <Button
-            android:id="@+id/dayToggle-Tue"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_day"
-            android:layout_weight="1"
-            android:text="@string/initial_tuesday" />
-
-        <Button
-            android:id="@+id/dayToggle-Wed"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_day"
-            android:layout_weight="1"
-            android:text="@string/initial_wednesday" />
-
-        <Button
-            android:id="@+id/dayToggle-Thu"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_day"
-            android:layout_weight="1"
-            android:text="@string/initial_thursday" />
-
-        <Button
-            android:id="@+id/dayToggle-Fri"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_day"
-            android:layout_weight="1"
-            android:text="@string/initial_friday" />
-
-        <Button
-            android:id="@+id/dayToggle-Sat"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_day"
-            android:layout_weight="1"
-            android:text="@string/initial_saturday" />
-
-        <Button
-            android:id="@+id/dayToggle-Sun"
-            style="@android:style/Widget.Material.Button.Toggle"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/button_day"
-            android:layout_weight="1"
-            android:text="@string/initial_sunday" />
-
-    </LinearLayout>
 
 </RelativeLayout>

@@ -1,28 +1,26 @@
 package brewin.mark.motionalarm;
 
 import android.Manifest;
-import android.app.AlarmManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 import android.support.v7.widget.Toolbar;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
-    private ArrayList<String> alarms = new ArrayList<>();
-
-    AlarmManager alarmManager;
+    private TextView noAlarms;
+    private RecyclerView alarmList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,25 +33,12 @@ public class MainActivity extends AppCompatActivity {
 
         checkPermissions();
 
-        //Fetches the alarm manager service.
-        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        noAlarms = findViewById(R.id.txtNoAlarms);
+        alarmList = findViewById(R.id.listAlarms);
 
-        alarms.add("Hello");
-        alarms.add("Test");
-        alarms.add("Frank.");
-
-        //Checks if any alarms exist and whether to display this.
-        if(!alarms.isEmpty()) {
-            Log.d(TAG, "Alarms exist and will be displayed.");
-            findViewById(R.id.txtNoAlarms).setVisibility(View.GONE);
-
-            //Lists each alarm using the custom layout.
-            ListView alarmList = findViewById(R.id.listAlarms);
-            AlarmAdapter alarmAdapter = new AlarmAdapter(this, R.layout.list_alarm, alarms);
-            alarmList.setAdapter(alarmAdapter);
-        } else {
-            Log.d(TAG, "No alarms exist to be displayed.");
-        }
+        final AlarmAdapter adapter = new AlarmAdapter(this);
+        alarmList.setAdapter(adapter);
+        alarmList.setLayoutManager(new LinearLayoutManager(this));
     }
 
     public void addAlarm(View view) {
@@ -84,25 +69,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*@Override
+    @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.alarm_add, menu);
+        inflater.inflate(R.menu.toolbar_main, menu);
         return true;
-    }*/
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.alarm_add:
-                Toast.makeText(getApplicationContext(), "Create Alarm", Toast.LENGTH_SHORT).show();
-                return true;
+                Intent intent = new Intent(getApplicationContext(), CreateAlarmActivity.class);
+                startActivity(intent);
 
+                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
-
         }
     }
 }

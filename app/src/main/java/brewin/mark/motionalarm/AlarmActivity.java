@@ -318,7 +318,7 @@ public class AlarmActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.alarm_end, menu);
+        inflater.inflate(R.menu.toolbar_alarm, menu);
         return true;
     }
 

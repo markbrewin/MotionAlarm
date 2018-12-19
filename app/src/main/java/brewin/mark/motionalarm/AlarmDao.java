@@ -5,7 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Dao
 public interface AlarmDao {
@@ -16,5 +16,5 @@ public interface AlarmDao {
     void deleteAll();
 
     @Query("SELECT * from tbl_alarm ORDER BY id")
-    LiveData<ArrayList<Alarm>> getAllAlarms();
+    LiveData<List<Alarm>> getAllAlarms();
 }

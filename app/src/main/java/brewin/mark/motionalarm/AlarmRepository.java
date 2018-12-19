@@ -4,11 +4,11 @@ import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class AlarmRepository {
     private AlarmDao mAlarmDao;
-    private LiveData<ArrayList<Alarm>> mAllAlarms;
+    private LiveData<List<Alarm>> mAllAlarms;
 
     AlarmRepository(Application application) {
         AlarmDatabase db = AlarmDatabase.getDatabase(application);
@@ -16,7 +16,7 @@ public class AlarmRepository {
         mAllAlarms = mAlarmDao.getAllAlarms();
     }
 
-    LiveData<ArrayList<Alarm>> getAllAlarms() {
+    LiveData<List<Alarm>> getAllAlarms() {
         return mAllAlarms;
     }
 

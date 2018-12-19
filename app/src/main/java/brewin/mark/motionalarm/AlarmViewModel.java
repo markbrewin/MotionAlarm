@@ -4,11 +4,11 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class AlarmViewModel extends AndroidViewModel {
     private AlarmRepository mRepository;
-    private LiveData<ArrayList<Alarm>> mAllAlarms;
+    private LiveData<List<Alarm>> mAllAlarms;
 
     public AlarmViewModel(Application application) {
         super(application);
@@ -16,7 +16,7 @@ public class AlarmViewModel extends AndroidViewModel {
         mAllAlarms = mRepository.getAllAlarms();
     }
 
-    LiveData<ArrayList<Alarm>> getAllAlarms() {
+    LiveData<List<Alarm>> getAllAlarms() {
         return mAllAlarms;
     }
 
