@@ -1,39 +1,43 @@
 package brewin.mark.motionalarm;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.TypeConverter;
-import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.util.Log;
 
-import java.util.Calendar;
-
-import static android.content.Context.ALARM_SERVICE;
-
-@Entity(tableName = "tbl_alarm")
+@Entity(tableName = "tbl_alarm", indices = {@Index(value = {"hour", "min"}, unique = true)})
 public class Alarm {
-    private static final String TAG = "Alarm";
-
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
 
     private String name;
 
     @NonNull
-    private Calendar time;
+    private int hour;
 
-    public Alarm(String name, @NonNull Calendar time) {
+    @NonNull
+    private int min;
+
+    public Alarm(String name, int hour, int min) {
         this.name = name;
-        this.time = time;
+        this.hour = hour;
+        this.min = min;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setHour(int hour) {
+        this.hour = hour;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
     }
 
     public int getId() {
@@ -44,15 +48,19 @@ public class Alarm {
         return name;
     }
 
-    public Calendar getTime() {
-        return time;
+    public int getHour() {
+        return hour;
     }
 
-    public String getHour() {
-        return String.format("%02d", time.get(Calendar.HOUR_OF_DAY));
+    public int getMin() {
+        return min;
     }
 
-    public String getMin() {
-        return String.format("%02d", time.get(Calendar.MINUTE));
+    public String getStrHour() {
+        return String.format("%02d", hour);
+    }
+
+    public String getStrMin() {
+        return String.format("%02d", min);
     }
 }

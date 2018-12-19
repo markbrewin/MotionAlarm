@@ -10,6 +10,7 @@ import java.util.Calendar;
 public class WakeCheck {
     private static final String TAG = "WakeCheck";
 
+    private Alarm alarm;
     private Calendar alarmTimeOriginal;
     private int triggerIteration;
 
@@ -20,7 +21,19 @@ public class WakeCheck {
         triggerIteration = 0;
     }
 
-    public String getTimeOriginal(char cat) {
+    public void setAlarm(Alarm alarm) {
+        this.alarm = alarm;
+    }
+
+    public Alarm getAlarm() {
+        return alarm;
+    }
+
+    public Calendar getTimeOriginal() {
+        return alarmTimeOriginal;
+    }
+
+    public String getTimeOriginalPart(char cat) {
         String val = "";
 
         switch (cat) {

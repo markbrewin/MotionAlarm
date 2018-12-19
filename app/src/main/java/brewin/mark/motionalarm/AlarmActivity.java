@@ -1,6 +1,8 @@
 package brewin.mark.motionalarm;
 
 import android.Manifest;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -10,6 +12,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +40,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.util.Calendar;
 
 //Activity used to display that the alarm has been triggered.
 public class AlarmActivity extends AppCompatActivity {
@@ -64,6 +68,8 @@ public class AlarmActivity extends AppCompatActivity {
     private WakeCheck wakeCheck;
     private CountDownTimer countdown;
 
+    private AlarmViewModel mAlarmViewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +87,8 @@ public class AlarmActivity extends AppCompatActivity {
         triggerIteration = findViewById(R.id.txtTriggerIteration);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+
+        mAlarmViewModel = ViewModelProviders.of(this).get(AlarmViewModel.class);
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
@@ -105,7 +113,16 @@ public class AlarmActivity extends AppCompatActivity {
 
         wakeCheck = new WakeCheck();
 
-        alarmTime.setText(getString(R.string.alarm_time, wakeCheck.getTimeOriginal('h'), wakeCheck.getTimeOriginal('m')));
+        mAlarmViewModel.getCurAlarm(wakeCheck.getTimeOriginal()).observe(this, new Observer<Alarm>() {
+            @Override
+            public void onChanged(@Nullable Alarm alarm) {
+                Log.d(TAG, "Updated current alarm.");
+
+                wakeCheck.setAlarm(alarm);
+            }
+        });
+
+        alarmTime.setText(getString(R.string.alarm_time, wakeCheck.getTimeOriginalPart('h'), wakeCheck.getTimeOriginalPart('m')));
         triggerIteration.setText(getString(R.string.alarm_iteration, wakeCheck.getTriggerIteration()));
 
         alarmInitialiseSound();
@@ -135,7 +152,7 @@ public class AlarmActivity extends AppCompatActivity {
         startTimeoutCountdown();
     }
 
-    public void alarmBtnStop(View view){
+    public void alarmBtnStop(View view) {
         alarmStop();
     }
 
@@ -156,6 +173,10 @@ public class AlarmActivity extends AppCompatActivity {
 
     private void alarmEnd() {
         Log.d(TAG, "Alarm destroyed.");
+
+        mAlarmViewModel.delete(wakeCheck.getAlarm());
+
+        countdown.cancel();
 
         alarmMedPlyr.stop();
         alarmMedPlyr.release();
@@ -326,7 +347,7 @@ public class AlarmActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.alarm_end:
-                finish();
+                alarmEnd();
                 return true;
             default:
                 // If we got here, the user's action was not recognized.

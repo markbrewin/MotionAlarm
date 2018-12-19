@@ -5,8 +5,6 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         mAlarmViewModel.getAllAlarms().observe(this, new Observer<List<Alarm>>() {
             @Override
             public void onChanged(@Nullable List<Alarm> alarms) {
-                Log.d(TAG, "Updating alarms list.");
+                Log.d(TAG, "Updated alarms list.");
 
                 adapter.setAlarms(alarms);
             }
@@ -82,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             Calendar time = Calendar.getInstance();
             time.setTimeInMillis(extras.getLong("time"));
 
-            Alarm alarm = new Alarm(name, time);
+            Alarm alarm = new Alarm(name, time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE));
             mAlarmViewModel.insert(alarm);
         } else {
             Log.d(TAG, "Alarm creation cancelled.");
