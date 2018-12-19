@@ -52,7 +52,11 @@ public abstract class AlarmDatabase extends RoomDatabase {
         protected Void doInBackground(final Void... params) {
             mDao.deleteAll();
 
-            Alarm alarm = new Alarm("Alarm Test 1", Calendar.getInstance());
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, 8);
+            cal.set(Calendar.MINUTE, 30);
+
+            Alarm alarm = new Alarm("Good Morning!", cal);
             mDao.insert(alarm);
 
             return null;

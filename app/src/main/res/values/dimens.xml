@@ -16,4 +16,5 @@
     <!-- Margins -->
     <dimen name="margin_med">32dp</dimen>
     <dimen name="margin_sml">16dp</dimen>
+    <dimen name="button_bin">32dp</dimen>
 </resources>

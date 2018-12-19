@@ -26,4 +26,5 @@
     <string name="alarm_timeout">+%1$s:%2$s</string>
     <string name="alarm_time">%1$s:%2$s</string>
     <string name="alarm_iteration">%1$d</string>
+    <string name="alarm_delete">\"Delete\"</string>
 </resources>
