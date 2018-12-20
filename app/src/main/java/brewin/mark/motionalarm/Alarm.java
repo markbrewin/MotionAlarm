@@ -5,12 +5,16 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import java.util.Calendar;
+
 @Entity(tableName = "tbl_alarm", indices = {@Index(value = {"hour", "min"}, unique = true)})
 public class Alarm {
     @PrimaryKey(autoGenerate = true)
     private int id = 0;
 
     private String name;
+
+    private long time;
 
     @NonNull
     private int hour;
@@ -22,6 +26,11 @@ public class Alarm {
         this.name = name;
         this.hour = hour;
         this.min = min;
+
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, hour);
+        cal.set(Calendar.MINUTE, min);
+        time = cal.getTimeInMillis();
     }
 
     public void setId(int id) {
@@ -30,6 +39,10 @@ public class Alarm {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 
     public void setHour(int hour) {
@@ -46,6 +59,10 @@ public class Alarm {
 
     public String getName() {
         return name;
+    }
+
+    public long getTime() {
+        return time;
     }
 
     public int getHour() {

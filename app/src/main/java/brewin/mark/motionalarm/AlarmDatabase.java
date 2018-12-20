@@ -9,7 +9,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-@Database(entities = {Alarm.class}, version = 3)
+@Database(entities = {Alarm.class}, version = 4)
 @TypeConverters({Converters.class})
 public abstract class AlarmDatabase extends RoomDatabase {
     public abstract AlarmDao alarmDao();
@@ -22,7 +22,7 @@ public abstract class AlarmDatabase extends RoomDatabase {
                 if(INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AlarmDatabase.class, "alarm_database")
-                            .addCallback(sRoomDatabaseCallback)
+                            //.addCallback(sRoomDatabaseCallback)
                             .fallbackToDestructiveMigration()
                             .build();
                 }

@@ -82,9 +82,26 @@ public class MainActivity extends AppCompatActivity {
 
             Alarm alarm = new Alarm(name, time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE));
             mAlarmViewModel.insert(alarm);
+            mAlarmViewModel.getAllAlarms().observe(this, new Observer<List<Alarm>>() {
+                @Override
+                public void onChanged(@Nullable List<Alarm> alarms) {
+                    checkNextAlarm();
+                }
+            });
         } else {
             Log.d(TAG, "Alarm creation cancelled.");
         }
+    }
+
+    private void checkNextAlarm() {
+        mAlarmViewModel.getNextAlarm().observe(this, new Observer<Alarm>() {
+            @Override
+            public void onChanged(@Nullable Alarm alarm) {
+                if(alarm != null) {
+                    mAlarmViewModel.setAlarmInManager(alarm);
+                }
+            }
+        });
     }
 
     private void checkPermissions() {

@@ -11,6 +11,7 @@ public class AlarmRepository {
     private AlarmDao mAlarmDao;
     private LiveData<List<Alarm>> mAllAlarms;
     private LiveData<Alarm> curAlarm;
+    private LiveData<Alarm> nextAlarm;
 
     AlarmRepository(Application application) {
         AlarmDatabase db = AlarmDatabase.getDatabase(application);
@@ -24,8 +25,12 @@ public class AlarmRepository {
 
     LiveData<Alarm> getCurAlarm(Calendar time) {
         curAlarm = mAlarmDao.getCurAlarm(time.get(Calendar.HOUR_OF_DAY), time.get(Calendar.MINUTE));
-
         return curAlarm;
+    }
+
+    LiveData<Alarm> getNextAlarm() {
+        nextAlarm = mAlarmDao.getNextAlarm(Calendar.getInstance().getTimeInMillis());
+        return nextAlarm;
     }
 
     public void insert(Alarm alarm) {

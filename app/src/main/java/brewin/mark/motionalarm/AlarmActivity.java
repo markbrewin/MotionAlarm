@@ -175,6 +175,12 @@ public class AlarmActivity extends AppCompatActivity {
         Log.d(TAG, "Alarm destroyed.");
 
         mAlarmViewModel.delete(wakeCheck.getAlarm());
+        mAlarmViewModel.getNextAlarm().observe(this, new Observer<Alarm>() {
+            @Override
+            public void onChanged(@Nullable Alarm alarm) {
+                mAlarmViewModel.setAlarmInManager(alarm);
+            }
+        });
 
         countdown.cancel();
 
