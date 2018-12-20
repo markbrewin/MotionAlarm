@@ -38,7 +38,11 @@ public class AlarmRepository {
     }
 
     public void delete(Alarm alarm){
-        new deleteAsyncTask(mAlarmDao).execute(alarm);
+        new deleteAlarmAsyncTask(mAlarmDao).execute(alarm);
+    }
+
+    public void delete(int id){
+        new deleteIdAsyncTask(mAlarmDao).execute(id);
     }
 
     private static class insertAsyncTask extends AsyncTask<Alarm, Void, Void> {
@@ -55,15 +59,29 @@ public class AlarmRepository {
         }
     }
 
-    private static class deleteAsyncTask extends AsyncTask<Alarm, Void, Void> {
+    private static class deleteAlarmAsyncTask extends AsyncTask<Alarm, Void, Void> {
         private AlarmDao mAsyncTaskDao;
 
-        deleteAsyncTask(AlarmDao dao) {
+        deleteAlarmAsyncTask(AlarmDao dao) {
             mAsyncTaskDao = dao;
         }
 
         @Override
         protected Void doInBackground(final Alarm... params) {
+            mAsyncTaskDao.delete(params[0]);
+            return null;
+        }
+    }
+
+    private static class deleteIdAsyncTask extends AsyncTask<Integer, Void, Void> {
+        private AlarmDao mAsyncTaskDao;
+
+        deleteIdAsyncTask(AlarmDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Integer... params)  {
             mAsyncTaskDao.delete(params[0]);
             return null;
         }

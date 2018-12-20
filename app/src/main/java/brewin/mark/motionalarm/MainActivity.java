@@ -3,10 +3,14 @@ package brewin.mark.motionalarm;
 import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -58,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setAlarms(alarms);
             }
         });
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReciever,
+                new IntentFilter("DeleteAlarm"));
     }
 
     public void addAlarm(View view) {
@@ -65,6 +72,11 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), CreateAlarmActivity.class);
         startActivityForResult(intent, NEW_ALARM);
+    }
+
+    public void deleteAlarm(int id) {
+        mAlarmViewModel.delete(id);
+        checkNextAlarm();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -103,6 +115,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+    public BroadcastReceiver mMessageReciever = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle extras = intent.getExtras();
+            int id = extras.getInt("id");
+
+            deleteAlarm(id);
+        }
+    };
 
     private void checkPermissions() {
         ActivityCompat.requestPermissions(this,

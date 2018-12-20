@@ -17,6 +17,9 @@ public interface AlarmDao {
     @Delete
     void delete(Alarm alarm);
 
+    @Query("DELETE FROM tbl_alarm WHERE id LIKE :id")
+    void delete(int id);
+
     @Query("DELETE FROM tbl_alarm")
     void deleteAll();
 

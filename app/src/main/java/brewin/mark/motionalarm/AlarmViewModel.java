@@ -58,6 +58,12 @@ public class AlarmViewModel extends AndroidViewModel {
         mRepository.delete(alarm);
     }
 
+    public void delete(int id) {
+        Log.d(TAG, "Deleting and setting next alarm.");
+
+        mRepository.delete(id);
+    }
+
     public void setAlarmInManager(Alarm alarm) {
         Log.d(TAG, "Creating next alarm in AlarmManager.");
         final Context context = getApplication().getApplicationContext();
