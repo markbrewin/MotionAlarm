@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity {
         mAlarmViewModel.getAllAlarms().observe(this, new Observer<List<Alarm>>() {
             @Override
             public void onChanged(@Nullable List<Alarm> alarms) {
-                checkNextAlarm();
+                if(alarms != null) {
+                    checkNextAlarm();
+                }
             }
         });
     }

@@ -56,6 +56,12 @@ public class AlarmViewModel extends AndroidViewModel {
         Log.d(TAG, "Deleting and setting next alarm.");
 
         mRepository.delete(alarm);
+
+        final Context context = getApplication().getApplicationContext();
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
+        Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+        PendingIntent alarmPendIntent = PendingIntent.getBroadcast(context, 1, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.cancel(alarmPendIntent);
     }
 
     public void delete(int id) {
@@ -73,19 +79,19 @@ public class AlarmViewModel extends AndroidViewModel {
         time.set(Calendar.MINUTE, alarm.getMin());
 
         Log.d(TAG, "Creating alarm intents.");
-        Intent alarmActivity = new Intent(context, AlarmReceiver.class);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 0, alarmActivity, 0);
+        Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+        PendingIntent alarmPendIntent = PendingIntent.getBroadcast(context, 1, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        Intent editAlarmActivity = new Intent(context, CreateAlarmActivity.class);
-        PendingIntent editAlarmIntent = PendingIntent.getActivity(context, 0, editAlarmActivity, 0);
+        Intent editAlarmIntent = new Intent(context, CreateAlarmActivity.class);
+        PendingIntent editAlarmPendIntent = PendingIntent.getActivity(context, 0, editAlarmIntent, 0);
 
         //Assigns the time and intents to the alarm.
         Log.d(TAG, "Setting alarm properties.");
-        AlarmManager.AlarmClockInfo alarmInfo = new AlarmManager.AlarmClockInfo(time.getTimeInMillis(), editAlarmIntent);
+        AlarmManager.AlarmClockInfo alarmInfo = new AlarmManager.AlarmClockInfo(time.getTimeInMillis(), editAlarmPendIntent);
 
         //Creates and sets the alarm clock in the alarm manager service.
         Log.d(TAG, "Finalising creation.");
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(ALARM_SERVICE);
-        alarmManager.setAlarmClock(alarmInfo, alarmIntent);
+        alarmManager.setAlarmClock(alarmInfo, alarmPendIntent);
     }
 }

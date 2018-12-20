@@ -3,8 +3,7 @@ package brewin.mark.motionalarm;
 import android.location.Location;
 import android.util.Log;
 
-import com.google.android.gms.location.LocationCallback;
-
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class WakeCheck {
@@ -12,13 +11,11 @@ public class WakeCheck {
 
     private Alarm alarm;
     private Calendar alarmTimeOriginal;
-    private int triggerIteration;
 
     public WakeCheck() {
         Log.d(TAG, "New WakeCheck created");
 
         alarmTimeOriginal = Calendar.getInstance();
-        triggerIteration = 0;
     }
 
     public void setAlarm(Alarm alarm) {
@@ -48,13 +45,7 @@ public class WakeCheck {
         return val;
     }
 
-    public int getTriggerIteration() {
-        return triggerIteration;
-    }
-
     public boolean checkMovement(Location oldLocation, Location newLocation, double wakeDistance) {
-        triggerIteration++;
-
         if(oldLocation == null) {
             Log.d(TAG, "Not enough data to compare values.");
 

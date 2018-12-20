@@ -3,6 +3,7 @@ package brewin.mark.motionalarm;
 import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -10,10 +11,12 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.CountDownTimer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -38,9 +41,13 @@ import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.Calendar;
+import java.util.ArrayList;
 
 //Activity used to display that the alarm has been triggered.
 public class AlarmActivity extends AppCompatActivity {
@@ -63,7 +70,8 @@ public class AlarmActivity extends AppCompatActivity {
     private Button alarmStop;
     private TextView alarmTime;
     private TextView countdownClock;
-    private TextView triggerIteration;
+    private TextView triviaQuestion;
+    private TextView triviaAnswer;
 
     private WakeCheck wakeCheck;
     private CountDownTimer countdown;
@@ -84,11 +92,14 @@ public class AlarmActivity extends AppCompatActivity {
         alarmStop = findViewById(R.id.btnStopAlarm);
         alarmTime = findViewById(R.id.txtAlarmTime);
         countdownClock = findViewById(R.id.txtCountdownClock);
-        triggerIteration = findViewById(R.id.txtTriggerIteration);
+        triviaQuestion = findViewById(R.id.txtQuestion);
+        triviaAnswer = findViewById(R.id.txtAnswer);
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         mAlarmViewModel = ViewModelProviders.of(this).get(AlarmViewModel.class);
+
+        new AsyncTaskParseJson().execute();
 
         if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
@@ -123,7 +134,6 @@ public class AlarmActivity extends AppCompatActivity {
         });
 
         alarmTime.setText(getString(R.string.alarm_time, wakeCheck.getTimeOriginalPart('h'), wakeCheck.getTimeOriginalPart('m')));
-        triggerIteration.setText(getString(R.string.alarm_iteration, wakeCheck.getTriggerIteration()));
 
         alarmInitialiseSound();
         alarmStart();
@@ -131,8 +141,6 @@ public class AlarmActivity extends AppCompatActivity {
 
     private void alarmStart() {
         Log.d(TAG, "Alarm started.");
-
-        triggerIteration.setText(getString(R.string.alarm_iteration, wakeCheck.getTriggerIteration()));
 
         if(countdown != null) {
             countdown.cancel();
@@ -175,12 +183,6 @@ public class AlarmActivity extends AppCompatActivity {
         Log.d(TAG, "Alarm destroyed.");
 
         mAlarmViewModel.delete(wakeCheck.getAlarm());
-        mAlarmViewModel.getNextAlarm().observe(this, new Observer<Alarm>() {
-            @Override
-            public void onChanged(@Nullable Alarm alarm) {
-                mAlarmViewModel.setAlarmInManager(alarm);
-            }
-        });
 
         countdown.cancel();
 
@@ -275,6 +277,49 @@ public class AlarmActivity extends AppCompatActivity {
                 }
             }
         }.start();
+    }
+
+    public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
+
+        class Trivia {
+            class Results {
+                String category;
+                String type;
+                String difficulty;
+                String question;
+                String correct_answer;
+                String[] incorrect_answers;
+            }
+
+            int response_code;
+            Results[] results;
+        }
+
+        Gson gson = new Gson();
+        String url = "https://opentdb.com/api.php?amount=10&type=multiple";
+        Trivia trivia;
+
+
+        @Override
+        protected String doInBackground(String... args0) {
+            try {
+                HttpConnect jParser = new HttpConnect();
+
+                String json = jParser.getJSONFromUrl(url);
+
+                trivia = gson.fromJson(json, Trivia.class);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String strFromDoInBg) {
+            triviaQuestion.setText(trivia.results[0].question);
+            triviaAnswer.setText(trivia.results[0].correct_answer);
+        }
     }
 
     private void getLocation() {

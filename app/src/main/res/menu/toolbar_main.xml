@@ -8,4 +8,10 @@
         android:icon="@drawable/ic_add_alarm_white_24dp"
         android:title="@string/menu_alarm_add"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/add_google_cal"
+        android:title="@string/add_google_cal" />
+    <item
+        android:id="@+id/settings"
+        android:title="@string/settings" />
 </menu>

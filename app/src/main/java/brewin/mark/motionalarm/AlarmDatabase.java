@@ -22,7 +22,7 @@ public abstract class AlarmDatabase extends RoomDatabase {
                 if(INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             AlarmDatabase.class, "alarm_database")
-                            //.addCallback(sRoomDatabaseCallback)
+                            .addCallback(sRoomDatabaseCallback)
                             .fallbackToDestructiveMigration()
                             .build();
                 }
