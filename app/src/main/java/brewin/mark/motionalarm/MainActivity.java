@@ -76,7 +76,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void deleteAlarm(int id) {
         mAlarmViewModel.delete(id);
-        checkNextAlarm();
+        mAlarmViewModel.getAllAlarms().observe(this, new Observer<List<Alarm>>() {
+            @Override
+            public void onChanged(@Nullable List<Alarm> alarms) {
+                checkNextAlarm();
+            }
+        });
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
