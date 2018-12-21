@@ -48,6 +48,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 //Activity used to display that the alarm has been triggered.
 public class AlarmActivity extends AppCompatActivity {
@@ -172,6 +173,8 @@ public class AlarmActivity extends AppCompatActivity {
             countdown.cancel();
         }
 
+        triviaAnswer.setVisibility(View.VISIBLE);
+
         //Stop the alarm sound and disable the button.
         alarmMedPlyr.stop();
         alarmStop.setEnabled(false);
@@ -283,22 +286,17 @@ public class AlarmActivity extends AppCompatActivity {
 
         class Trivia {
             class Results {
-                String category;
                 String type;
-                String difficulty;
                 String question;
                 String correct_answer;
-                String[] incorrect_answers;
             }
 
-            int response_code;
             Results[] results;
         }
 
         Gson gson = new Gson();
         String url = "https://opentdb.com/api.php?amount=10&type=multiple";
         Trivia trivia;
-
 
         @Override
         protected String doInBackground(String... args0) {
@@ -317,9 +315,22 @@ public class AlarmActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String strFromDoInBg) {
-            triviaQuestion.setText(trivia.results[0].question);
-            triviaAnswer.setText(trivia.results[0].correct_answer);
+            mAlarmViewModel.insertTrivia(trivia.results[0].question, trivia.results[0].correct_answer);
+
+            getTriviaFromDb();
         }
+    }
+
+    void getTriviaFromDb() {
+        mAlarmViewModel.getAllTrivia().observe(this, new Observer<List<brewin.mark.motionalarm.Trivia>>() {
+            @Override
+            public void onChanged(@Nullable List<brewin.mark.motionalarm.Trivia> trivia) {
+                if(trivia != null && !trivia.isEmpty()) {
+                    triviaQuestion.setText(trivia.get(0).getQuestion());
+                    triviaAnswer.setText(trivia.get(0).getAnswer());
+                }
+            }
+        });
     }
 
     private void getLocation() {

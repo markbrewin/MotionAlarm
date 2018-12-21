@@ -163,9 +163,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent;
+
         switch (item.getItemId()) {
             case R.id.alarm_add:
-                Intent intent = new Intent(getApplicationContext(), CreateAlarmActivity.class);
+                intent = new Intent(getApplicationContext(), CreateAlarmActivity.class);
+                startActivity(intent);
+
+                return true;
+            case R.id.add_google_cal:
+                intent = new Intent(getApplicationContext(), CalendarActivity.class);
+                startActivity(intent);
+
+                return true;
+            case R.id.settings:
+                intent = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
 
                 return true;

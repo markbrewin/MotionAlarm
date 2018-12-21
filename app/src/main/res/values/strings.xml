@@ -3,6 +3,7 @@
 
     <!-- Titles -->
     <string name="alarms_upcoming">Upcoming Alarms</string>
+    <string name="google_sign_in">Google Account Sign In</string>
 
     <!-- Menu Items -->
     <string name="menu_alarm_add">Add Alarm</string>
@@ -27,13 +28,36 @@
     <string name="add_google_cal">Add Calendar Alarm</string>
     <string name="settings">Settings</string>
 
+    <string name="sign_in">Sign In</string>
+    <string name="sign_out">Sign Out</string>
+
     <!-- Alarms -->
     <string name="alarm_name">Name</string>
     <string name="alarm_name_hint">Good Morning!</string>
     <string name="alarm_name_default">New Alarm</string>
 
+    <!-- Settings -->
+    <string name="signed_in_fmt">Signed in with account %1$s</string>
+    <string name="signed_in">Signed In</string>
+    <string name="signing_in">Signing In&#8230;</string>
+    <string name="signed_out">Signed Out</string>
+    <string name="signed_in_err">An error occurred whilst signing in.</string>
+    <string name="error_null_person">
+        Error: Plus.PeopleApi.getCurrentPerson returned null. Ensure that the Google+ API is
+        enabled for your project, you have a properly configured google-services.json file
+        and that your device has an internet connection.
+    </string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="auth_code_fmt">Auth Code: %1$s</string>
+    <string name="id_token_fmt">ID Token: %1$s</string>
+    <string name="play_services_error_fmt">Google Play Services Error: %i</string>
+    <string name="contacts_permission_rationale">Contacts access is needed in order to retrieve your email address.</string>
+
     <!-- Formats -->
     <string name="alarm_timeout">+%1$s:%2$s</string>
     <string name="alarm_time">%1$s:%2$s</string>
     <string name="string">%1$s</string>
+
+    <!-- Key -->
+    <string name="server_client_id">617700645504-cftjlo1tl25n2gn9u6q8m8gksgk3qmo1.apps.googleusercontent.com</string>
 </resources>

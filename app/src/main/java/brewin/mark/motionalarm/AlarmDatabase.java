@@ -9,10 +9,11 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
-@Database(entities = {Alarm.class}, version = 4)
+@Database(entities = {Alarm.class, Trivia.class}, version = 5)
 @TypeConverters({Converters.class})
 public abstract class AlarmDatabase extends RoomDatabase {
     public abstract AlarmDao alarmDao();
+    public abstract TriviaDao triviaDao();
 
     private static volatile AlarmDatabase INSTANCE;
 
@@ -41,15 +42,18 @@ public abstract class AlarmDatabase extends RoomDatabase {
     };
 
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
-        private final AlarmDao mDao;
+        private final AlarmDao aDao;
+        private final TriviaDao tDao;
 
         PopulateDbAsync(AlarmDatabase db) {
-            mDao = db.alarmDao();
+            aDao = db.alarmDao();
+            tDao = db.triviaDao();
         }
 
         @Override
         protected Void doInBackground(final Void... params) {
-            mDao.deleteAll();
+            aDao.deleteAll();
+            tDao.deleteAll();
 
             /*Calendar cal = Calendar.getInstance();
             cal.add(Calendar.MINUTE, 5);

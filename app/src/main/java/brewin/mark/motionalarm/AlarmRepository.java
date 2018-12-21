@@ -9,18 +9,26 @@ import java.util.List;
 
 public class AlarmRepository {
     private AlarmDao mAlarmDao;
+    private TriviaDao mTriviaDao;
     private LiveData<List<Alarm>> mAllAlarms;
+    private LiveData<List<Trivia>> mAllTrivia;
     private LiveData<Alarm> curAlarm;
     private LiveData<Alarm> nextAlarm;
 
     AlarmRepository(Application application) {
         AlarmDatabase db = AlarmDatabase.getDatabase(application);
         mAlarmDao = db.alarmDao();
+        mTriviaDao = db.triviaDao();
         mAllAlarms = mAlarmDao.getAllAlarms();
+        mAllTrivia = mTriviaDao.getAllTrivia();
     }
 
     LiveData<List<Alarm>> getAllAlarms() {
         return mAllAlarms;
+    }
+
+    LiveData<List<Trivia>> getAllTrivia() {
+        return mAllTrivia;
     }
 
     LiveData<Alarm> getCurAlarm(Calendar time) {
@@ -35,6 +43,10 @@ public class AlarmRepository {
 
     public void insert(Alarm alarm) {
         new insertAsyncTask(mAlarmDao).execute(alarm);
+    }
+
+    public void insertTrivia(Trivia trivia) {
+        new insertTriviaAsyncTask(mTriviaDao).execute(trivia);
     }
 
     public void delete(Alarm alarm){
@@ -54,6 +66,20 @@ public class AlarmRepository {
 
         @Override
         protected Void doInBackground(final Alarm... params) {
+            mAsyncTaskDao.insert(params[0]);
+            return null;
+        }
+    }
+
+    private static class insertTriviaAsyncTask extends AsyncTask<Trivia, Void, Void> {
+        private TriviaDao mAsyncTaskDao;
+
+        insertTriviaAsyncTask(TriviaDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Trivia... params) {
             mAsyncTaskDao.insert(params[0]);
             return null;
         }

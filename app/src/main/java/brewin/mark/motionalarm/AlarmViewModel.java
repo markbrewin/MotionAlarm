@@ -21,6 +21,7 @@ public class AlarmViewModel extends AndroidViewModel {
 
     private AlarmRepository mRepository;
     private LiveData<List<Alarm>> mAllAlarms;
+    private LiveData<List<Trivia>> mAllTrivia;
     private LiveData<Alarm> curAlarm;
     private LiveData<Alarm> nextAlarm;
 
@@ -28,10 +29,15 @@ public class AlarmViewModel extends AndroidViewModel {
         super(application);
         mRepository = new AlarmRepository(application);
         mAllAlarms = mRepository.getAllAlarms();
+        mAllTrivia = mRepository.getAllTrivia();
     }
 
     LiveData<List<Alarm>> getAllAlarms() {
         return mAllAlarms;
+    }
+
+    LiveData<List<Trivia>> getAllTrivia() {
+        return mAllTrivia;
     }
 
     public LiveData<Alarm> getCurAlarm(Calendar time) {
@@ -50,6 +56,14 @@ public class AlarmViewModel extends AndroidViewModel {
         Log.d(TAG, "Creating new alarm.");
 
         mRepository.insert(alarm);
+    }
+
+    public void insertTrivia(String question, String answer) {
+        Log.d(TAG, "Creating new trivia.");
+
+        Trivia trivia = new Trivia(question, answer);
+
+        mRepository.insertTrivia(trivia);
     }
 
     public void delete(Alarm alarm) {

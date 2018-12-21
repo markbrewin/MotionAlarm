@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbarMain"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@android:color/white"/>
+
+    <TextView
+        android:id="@+id/txtGoogleSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:layout_marginLeft="@dimen/margin_sml"
+        android:layout_marginRight="@dimen/margin_sml"
+        android:paddingTop="@dimen/margin_sml"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/google_sign_in"
+        android:textSize="@dimen/text_large" />
+
+    <TextView
+        android:id="@+id/txtStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_sml"
+        app:layout_constraintTop_toBottomOf="@id/txtGoogleSignIn"
+        android:text="@string/signed_out"/>
+
+    <LinearLayout
+        android:id="@+id/signinButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/margin_sml"
+        android:paddingBottom="@dimen/margin_sml"
+        android:paddingLeft="@dimen/margin_med"
+        android:paddingRight="@dimen/margin_med"
+        app:layout_constraintTop_toBottomOf="@id/txtStatus"
+        android:orientation="horizontal">
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btnSignIn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sign_in"/>
+
+        <Button
+            android:id="@+id/btnSignOut"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/sign_out"
+            android:enabled="false"/>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
